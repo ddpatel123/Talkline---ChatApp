@@ -5,26 +5,34 @@ import MessageInput from './MessageInput.jsx';
 import MessageSkeleton from './skeletons/MessageSkeleton.jsx';
 import {useAuthStore} from '../store/useAuthStore.jsx';
 import { formatMessageTime } from '../lib/utils.js';
-const messageendref = useRef(null);
 
 
 function Chatcontainer() {
-
+  
   const { messages, selecteduser, getmessages, ismessagesloading ,suscribetomessages,unsuscribefrommessages} = useChatStore();
   const {authuser} = useAuthStore();
+  
+  const messageendref = useRef(null);
   
   useEffect(() => {
     // console.log(selecteduser._id);
     // console.log(authuser._id);
     // console.log(messages);
-    getmessages(selecteduser._id);
-    suscribetomessages();
+    if(selecteduser._id)
+    {
+
+      getmessages(selecteduser._id);
+      suscribetomessages();
+    }
   }, [selecteduser, getmessages, suscribetomessages, unsuscribefrommessages]);
 
 
   useEffect(() => { 
     if(messages && messageendref.current)
-    messageendref.current.scrollIntoView({ behavior: 'smooth' });
+    {
+      messageendref.current.scrollIntoView({ behavior: 'smooth' });
+
+    }
   }, [messages]);
 
 
